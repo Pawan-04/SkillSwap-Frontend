@@ -1,36 +1,44 @@
 import UserCard from "../components/UserCard";
 import api from "../services/api";
+import { useEffect, useState } from "react";
 function Dashboard() {
+const [loading, setLoading] = useState(true);
+const [error, setError] = useState("");
+const [user, setUser] = useState(null);
 
+useEffect(() => {
     const getUser = async () => {
-        const response = await api.get("/users/me");
+        try {
+            const response = await api.get("/users/me");
 
-        console.log(response.data);
+            setUser(response.data.user);
+        } catch (error) {
+            setError(
+                error.response?.data?.message ||
+                "Something went wrong"
+            );
+        } finally {
+            setLoading(false);
+        }
     };
-    const user = {
-        name: "Pawan",
-        bio: "MERN Developer",
-        skillsToTeach: ["React", "Node.js", "MongoDB"]
-    };
+    
+    getUser();
+}, []);
 
-    const handleEdit = () => {
-        console.log("Edit profile clicked");
-    };
 
-    return (
-        <div>
-            <h1>Dashboard</h1>
+ if (loading) {
+    return <p>Loading...</p>;
+}
 
-            <UserCard
-                user={user}
-                onEdit={handleEdit}
-            />
+if (error) {
+    return <p>{error}</p>;
+}
 
-            <button onClick={getUser}>
-                Get My Profile
-            </button>
-        </div>
-    );
+return (
+    <div>
+        <h1>Welcome {user.name}</h1>
+    </div>
+);
 }
 
 export default Dashboard;
