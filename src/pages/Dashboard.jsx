@@ -1,44 +1,39 @@
-import UserCard from "../components/UserCard";
-import api from "../services/api";
-import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
+import SkillList from "../components/SkillList";
+
 function Dashboard() {
-const [loading, setLoading] = useState(true);
-const [error, setError] = useState("");
-const [user, setUser] = useState(null);
+    const { user } = useAuth();
 
-useEffect(() => {
-    const getUser = async () => {
-        try {
-            const response = await api.get("/users/me");
+    return (
+        <main className="dashboard">
 
-            setUser(response.data.user);
-        } catch (error) {
-            setError(
-                error.response?.data?.message ||
-                "Something went wrong"
-            );
-        } finally {
-            setLoading(false);
-        }
-    };
-    
-    getUser();
-}, []);
+            <section className="user-summary">
+                <h1>Welcome, {user.name} 👋</h1>
 
+                <p>{user.email}</p>
 
- if (loading) {
-    return <p>Loading...</p>;
-}
+                <div>
+                    <h2>Bio</h2>
+                    <p>{user.bio || "No bio added yet."}</p>
+                </div>
+            </section>
 
-if (error) {
-    return <p>{error}</p>;
-}
+            <section className="skills-grid">
 
-return (
-    <div>
-        <h1>Welcome {user.name}</h1>
-    </div>
-);
+                <SkillList
+                    title="Skills I Teach"
+                    skills={user.skillsToTeach}
+                />
+
+                <SkillList
+                    title="Skills I Want to Learn"
+                    skills={user.skillsToLearn}
+                />
+
+            </section>
+
+        </main>
+    );
 }
 
 export default Dashboard;
