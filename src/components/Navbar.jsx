@@ -1,4 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
+
+
+    
 
 const navItems = [
     {
@@ -16,6 +20,8 @@ const navItems = [
 ];
 
 function Navbar() {
+    const { user } = useAuth();
+    console.log(user);
     return (
         <nav>
             <Link to="/">SkillSwap</Link>
