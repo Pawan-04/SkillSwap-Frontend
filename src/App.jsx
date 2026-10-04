@@ -6,6 +6,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
+import Resources from "./pages/Resources";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                     <Route element={<ProtectedRoute />}>
     <Route path="/dashboard" element={<Dashboard />} />
     <Route path="/profile" element={<Profile />} />
+    <Route path="/resources" element={<Resources />} />
 </Route>
 
                 </Route>
