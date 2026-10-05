@@ -135,200 +135,155 @@ function Resources() {
 });
 
     if (loading) {
-        return <p>Loading resources...</p>;
+        return (
+            <main>
+                <div className="loading">Loading resources...</div>
+            </main>
+        );
     }
 
     return (
         <main>
-            <h1>Resources</h1>
+            <div className="page-header">
+                <h1>Resources</h1>
+                <p className="page-subtitle">Discover and share helpful learning materials</p>
+            </div>
 
             {/* Create Resource */}
-            <section>
-                <h2>Create Resource</h2>
+            <section className="card form-card">
+                <h2>Share a Resource</h2>
 
                 <form onSubmit={handleSubmit}>
                     <div>
-                        <label htmlFor="title">
-                            Title
-                        </label>
-
+                        <label htmlFor="title">Title</label>
                         <input
                             id="title"
                             name="title"
                             type="text"
                             value={formData.title}
                             onChange={handleChange}
-                            placeholder="React Hooks Guide"
+                            placeholder="React Hooks Complete Guide"
                         />
                     </div>
 
                     <div>
-                        <label htmlFor="description">
-                            Description
-                        </label>
-
+                        <label htmlFor="description">Description</label>
                         <textarea
                             id="description"
                             name="description"
                             value={formData.description}
                             onChange={handleChange}
-                            placeholder="A useful guide for React Hooks"
+                            placeholder="Briefly describe what this resource covers..."
                         />
                     </div>
 
-                    <div>
-                        <label htmlFor="url">
-                            Resource URL
-                        </label>
+                    <div className="form-row">
+                        <div>
+                            <label htmlFor="url">Resource URL</label>
+                            <input
+                                id="url"
+                                name="url"
+                                type="url"
+                                value={formData.url}
+                                onChange={handleChange}
+                                placeholder="https://example.com"
+                            />
+                        </div>
 
-                        <input
-                            id="url"
-                            name="url"
-                            type="url"
-                            value={formData.url}
-                            onChange={handleChange}
-                            placeholder="https://example.com"
-                        />
+                        <div>
+                            <label htmlFor="category">Category</label>
+                            <select
+                                id="category"
+                                name="category"
+                                value={formData.category}
+                                onChange={handleChange}
+                            >
+                                <option value="">Select category</option>
+                                <option value="Frontend">Frontend</option>
+                                <option value="Backend">Backend</option>
+                                <option value="Database">Database</option>
+                                <option value="AI/ML">AI/ML</option>
+                                <option value="DevOps">DevOps</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <div>
-                        <label htmlFor="category">
-                            Category
-                        </label>
-
-                        <select
-                            id="category"
-                            name="category"
-                            value={formData.category}
-                            onChange={handleChange}
-                        >
-                            <option value="">
-                                Select category
-                            </option>
-
-                            <option value="Frontend">
-                                Frontend
-                            </option>
-
-                            <option value="Backend">
-                                Backend
-                            </option>
-
-                            <option value="Database">
-                                Database
-                            </option>
-
-                            <option value="AI/ML">
-                                AI/ML
-                            </option>
-
-                            <option value="DevOps">
-                                DevOps
-                            </option>
-
-                            <option value="Other">
-                                Other
-                            </option>
-                        </select>
-                    </div>
-
-                    <button
-                        type="submit"
-                        disabled={creating}
-                    >
-                        {creating
-                            ? "Creating..."
-                            : "Create Resource"}
+                    <button type="submit" disabled={creating}>
+                        {creating ? "Creating..." : "Create Resource"}
                     </button>
                 </form>
             </section>
 
             {/* Messages */}
-            {error && <p>{error}</p>}
-            {success && <p>{success}</p>}
+            {error && <div className="error-message">{error}</div>}
+            {success && <div className="success-message">{success}</div>}
 
             {/* Filter */}
-            <section>
-                <h2>Filter Resources</h2>
+            <section className="card filter-card">
+                <h2>Search & Filter Resources</h2>
 
-                <label htmlFor="categoryFilter">
-                    Filter by Category
-                </label>
+                <div className="filter-grid">
+                    <div>
+                        <label htmlFor="resourceSearch">Search Resources</label>
+                        <input
+                            id="resourceSearch"
+                            type="text"
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder="Search resources..."
+                        />
+                    </div>
 
-                <div>
-    <label htmlFor="resourceSearch">
-        Search Resources
-    </label>
+                    <div>
+                        <label htmlFor="categoryFilter">Filter by Category</label>
+                        <select
+                            id="categoryFilter"
+                            value={category}
+                            onChange={(e) => setCategory(e.target.value)}
+                        >
+                            <option value="">All Categories</option>
+                            <option value="Frontend">Frontend</option>
+                            <option value="Backend">Backend</option>
+                            <option value="Database">Database</option>
+                            <option value="AI/ML">AI/ML</option>
+                            <option value="DevOps">DevOps</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
 
-    <input
-        id="resourceSearch"
-        type="text"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="Search resources..."
-    />
-</div>
-
-                <select
-                    id="categoryFilter"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                >
-                    <option value="">
-                        All Categories
-                    </option>
-
-                    <option value="Frontend">
-                        Frontend
-                    </option>
-
-                    <option value="Backend">
-                        Backend
-                    </option>
-
-                    <option value="Database">
-                        Database
-                    </option>
-
-                    <option value="AI/ML">
-                        AI/ML
-                    </option>
-
-                    <option value="DevOps">
-                        DevOps
-                    </option>
-
-                    <option value="Other">
-                        Other
-                    </option>
-                </select>
-
-                <button
-    type="button"
-    onClick={() => {
-        setCategory("");
-        setSearch("");
-    }}
->
-    Clear Filters
-</button>
+                {(category || search) && (
+                    <button
+                        type="button"
+                        className="btn-secondary"
+                        onClick={() => {
+                            setCategory("");
+                            setSearch("");
+                        }}
+                    >
+                        Clear Filters
+                    </button>
+                )}
             </section>
 
             {/* Resource List */}
-            <section>
-                <h2>All Resources</h2>
+            <section className="section-block">
+                <h2>Available Resources</h2>
 
                 {filteredResources.length === 0 ? (
-                    <p>No resources found.</p>
+                    <div className="empty-state">No resources found.</div>
                 ) : (
-                    filteredResources.map((resource) => (
-                        <ResourceCard
-                            key={resource._id}
-                            resource={resource}
-                            onDelete={deleteResource}
-                            deletingId={deletingId}
-                        />
-                    ))
+                    <div className="resources-grid">
+                        {filteredResources.map((resource) => (
+                            <ResourceCard
+                                key={resource._id}
+                                resource={resource}
+                                onDelete={deleteResource}
+                                deletingId={deletingId}
+                            />
+                        ))}
+                    </div>
                 )}
             </section>
         </main>

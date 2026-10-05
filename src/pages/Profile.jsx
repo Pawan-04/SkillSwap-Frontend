@@ -70,93 +70,94 @@ function Profile() {
     };
 
     return (
-        <main>
-            <h1>My Profile</h1>
+        <main className="profile-container">
+            <div className="page-header">
+                <h1>My Profile</h1>
+                <p className="page-subtitle">Manage your personal info and skill preferences</p>
+            </div>
 
-            <form onSubmit={handleSubmit}>
-                {/* Email */}
-                <div>
-                    <label htmlFor="email">Email</label>
+            <div className="card profile-card">
+                <form onSubmit={handleSubmit}>
+                    {/* Email */}
+                    <div>
+                        <label htmlFor="email">Email Address</label>
+                        <input
+                            id="email"
+                            type="email"
+                            value={user.email}
+                            disabled
+                        />
+                    </div>
 
-                    <input
-                        id="email"
-                        type="email"
-                        value={user.email}
-                        disabled
-                    />
-                </div>
+                    {/* Name */}
+                    <div>
+                        <label htmlFor="name">Full Name</label>
+                        <input
+                            id="name"
+                            name="name"
+                            type="text"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-                {/* Name */}
-                <div>
-                    <label htmlFor="name">Name</label>
+                    {/* Bio */}
+                    <div>
+                        <label htmlFor="bio">Bio</label>
+                        <textarea
+                            id="bio"
+                            name="bio"
+                            value={formData.bio}
+                            onChange={handleChange}
+                            placeholder="Tell the community about yourself and your expertise..."
+                        />
+                    </div>
 
-                    <input
-                        id="name"
-                        name="name"
-                        type="text"
-                        value={formData.name}
-                        onChange={handleChange}
-                    />
-                </div>
+                    {/* Skills to Teach */}
+                    <div>
+                        <label htmlFor="skillsToTeach">
+                            Skills I Teach <span className="label-hint">(separated by comma)</span>
+                        </label>
 
-                {/* Bio */}
-                <div>
-                    <label htmlFor="bio">Bio</label>
+                        <input
+                            id="skillsToTeach"
+                            name="skillsToTeach"
+                            type="text"
+                            value={formData.skillsToTeach}
+                            onChange={handleChange}
+                            placeholder="React, Node.js, MongoDB"
+                        />
+                    </div>
 
-                    <textarea
-                        id="bio"
-                        name="bio"
-                        value={formData.bio}
-                        onChange={handleChange}
-                    />
-                </div>
+                    {/* Skills to Learn */}
+                    <div>
+                        <label htmlFor="skillsToLearn">
+                            Skills I Want to Learn <span className="label-hint">(separated by comma)</span>
+                        </label>
 
-                {/* Skills to Teach */}
-                <div>
-                    <label htmlFor="skillsToTeach">
-                        Skills I Teach
-                    </label>
+                        <input
+                            id="skillsToLearn"
+                            name="skillsToLearn"
+                            type="text"
+                            value={formData.skillsToLearn}
+                            onChange={handleChange}
+                            placeholder="AWS, Docker, System Design"
+                        />
+                    </div>
 
-                    <input
-                        id="skillsToTeach"
-                        name="skillsToTeach"
-                        type="text"
-                        value={formData.skillsToTeach}
-                        onChange={handleChange}
-                        placeholder="React, Node.js, MongoDB"
-                    />
-                </div>
+                    {/* Messages */}
+                    {error && <div className="error-message">{error}</div>}
+                    {success && <div className="success-message">{success}</div>}
 
-                {/* Skills to Learn */}
-                <div>
-                    <label htmlFor="skillsToLearn">
-                        Skills I Want to Learn
-                    </label>
-
-                    <input
-                        id="skillsToLearn"
-                        name="skillsToLearn"
-                        type="text"
-                        value={formData.skillsToLearn}
-                        onChange={handleChange}
-                        placeholder="AWS, Docker, System Design"
-                    />
-                </div>
-
-                {/* Submit */}
-                <button
-                    type="submit"
-                    disabled={loading}
-                >
-                    {loading ? "Saving..." : "Save Changes"}
-                </button>
-
-                {/* Error */}
-                {error && <p>{error}</p>}
-
-                {/* Success */}
-                {success && <p>{success}</p>}
-            </form>
+                    {/* Submit */}
+                    <button
+                        type="submit"
+                        disabled={loading}
+                    >
+                        {loading ? "Saving..." : "Save Changes"}
+                    </button>
+                </form>
+            </div>
         </main>
     );
 }

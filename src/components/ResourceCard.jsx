@@ -7,31 +7,34 @@ function ResourceCard({
 
     return (
         <article className="resource-card">
-            <h2>{resource.title}</h2>
+            <div className="resource-header">
+                <h3>{resource.title}</h3>
+                {resource.category && (
+                    <span className="category-badge">{resource.category}</span>
+                )}
+            </div>
 
-            <p>{resource.description}</p>
+            <p className="resource-description">{resource.description}</p>
 
-            <p>
-                Category: {resource.category}
-            </p>
+            <div className="resource-actions">
+                <a
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="resource-link"
+                >
+                    Open Resource ↗
+                </a>
 
-            <a
-                href={resource.url}
-                target="_blank"
-                rel="noopener noreferrer"
-            >
-                Open Resource
-            </a>
-
-            <button
-                type="button"
-                onClick={() => onDelete(resource._id)}
-                disabled={isDeleting}
-            >
-                {isDeleting
-                    ? "Deleting..."
-                    : "Delete"}
-            </button>
+                <button
+                    type="button"
+                    className="btn-danger"
+                    onClick={() => onDelete(resource._id)}
+                    disabled={isDeleting}
+                >
+                    {isDeleting ? "Deleting..." : "Delete"}
+                </button>
+            </div>
         </article>
     );
 }

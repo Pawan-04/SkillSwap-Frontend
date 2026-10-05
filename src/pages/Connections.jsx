@@ -85,57 +85,70 @@ function Connections() {
     };
 
     if (loading) {
-        return <p>Loading connections...</p>;
+        return (
+            <main>
+                <div className="loading">Loading connections...</div>
+            </main>
+        );
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return (
+            <main>
+                <div className="error-message">{error}</div>
+            </main>
+        );
     }
 
     return (
         <main>
-            <h1>Connections</h1>
+            <div className="page-header">
+                <h1>Connections</h1>
+                <p className="page-subtitle">Manage connection requests and view your network</p>
+            </div>
 
             {/* Incoming Connection Requests */}
-
-            <section>
+            <section className="section-block">
                 <h2>Connection Requests</h2>
 
                 {requests.length === 0 ? (
-                    <p>No pending requests.</p>
+                    <div className="empty-state">No pending requests.</div>
                 ) : (
-                    requests.map((request) => (
-                        <ConnectionCard
-                            key={request._id}
-                            request={request}
-                            onUpdate={handleUpdateRequest}
-                            updatingId={updatingId}
-                        />
-                    ))
+                    <div className="connections-grid">
+                        {requests.map((request) => (
+                            <ConnectionCard
+                                key={request._id}
+                                request={request}
+                                onUpdate={handleUpdateRequest}
+                                updatingId={updatingId}
+                            />
+                        ))}
+                    </div>
                 )}
             </section>
 
             {/* Accepted Connections */}
-
-            <section>
+            <section className="section-block">
                 <h2>My Connections</h2>
 
                 {connections.length === 0 ? (
-                    <p>No connections yet.</p>
+                    <div className="empty-state">No connections yet. Discover members to build your network!</div>
                 ) : (
-                    connections.map((connection) => {
-                        const otherUser =
-                            connection.sender._id === user._id
-                                ? connection.receiver
-                                : connection.sender;
+                    <div className="connections-grid">
+                        {connections.map((connection) => {
+                            const otherUser =
+                                connection.sender._id === user._id
+                                    ? connection.receiver
+                                    : connection.sender;
 
-                        return (
-                            <AcceptedConnectionCard
-                                key={connection._id}
-                                user={otherUser}
-                            />
-                        );
-                    })
+                            return (
+                                <AcceptedConnectionCard
+                                    key={connection._id}
+                                    user={otherUser}
+                                />
+                            );
+                        })}
+                    </div>
                 )}
             </section>
         </main>

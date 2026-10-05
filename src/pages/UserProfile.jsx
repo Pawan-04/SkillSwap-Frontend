@@ -31,52 +31,67 @@ function UserProfile() {
     }, [userId]);
 
     if (loading) {
-        return <p>Loading profile...</p>;
+        return (
+            <main>
+                <div className="loading">Loading profile...</div>
+            </main>
+        );
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return (
+            <main>
+                <div className="error-message">{error}</div>
+            </main>
+        );
     }
 
     return (
-        <main>
-            <h1>{user.name}</h1>
+        <main className="profile-container">
+            <div className="card profile-card">
+                <div className="profile-header">
+                    <div className="user-avatar-large">
+                        {user.name ? user.name.charAt(0).toUpperCase() : "U"}
+                    </div>
+                    <div>
+                        <h1>{user.name}</h1>
+                        <p className="user-email">{user.email}</p>
+                    </div>
+                </div>
 
-            <p>
-                {user.bio || "No bio added yet."}
-            </p>
+                <div className="profile-bio-box">
+                    <h3>About</h3>
+                    <p>{user.bio || "No bio added yet."}</p>
+                </div>
 
-            <section>
-                <h2>Skills to Teach</h2>
+                <div className="skills-grid">
+                    <div className="skill-list">
+                        <h2>Skills to Teach</h2>
+                        {user.skillsToTeach && user.skillsToTeach.length > 0 ? (
+                            <div className="skill-tags">
+                                {user.skillsToTeach.map((skill) => (
+                                    <span key={skill} className="skill">{skill}</span>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="empty-state">No skills listed.</p>
+                        )}
+                    </div>
 
-                {user.skillsToTeach.length === 0 ? (
-                    <p>No skills added yet.</p>
-                ) : (
-                    <ul>
-                        {user.skillsToTeach.map((skill) => (
-                            <li key={skill}>
-                                {skill}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </section>
-
-            <section>
-                <h2>Skills to Learn</h2>
-
-                {user.skillsToLearn.length === 0 ? (
-                    <p>No skills added yet.</p>
-                ) : (
-                    <ul>
-                        {user.skillsToLearn.map((skill) => (
-                            <li key={skill}>
-                                {skill}
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </section>
+                    <div className="skill-list">
+                        <h2>Skills to Learn</h2>
+                        {user.skillsToLearn && user.skillsToLearn.length > 0 ? (
+                            <div className="skill-tags">
+                                {user.skillsToLearn.map((skill) => (
+                                    <span key={skill} className="skill">{skill}</span>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="empty-state">No skills listed.</p>
+                        )}
+                    </div>
+                </div>
+            </div>
         </main>
     );
 }

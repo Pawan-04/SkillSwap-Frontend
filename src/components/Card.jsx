@@ -1,8 +1,7 @@
-function Card({ variant, children }) {
+function Card({ variant, children, className = "" }) {
+    const variantClass = variant ? `card-${variant}` : "";
     return (
-        <div>
-            <p>Card type: {variant}</p>
-
+        <div className={`card ${variantClass} ${className}`.trim()}>
             {children}
         </div>
     );

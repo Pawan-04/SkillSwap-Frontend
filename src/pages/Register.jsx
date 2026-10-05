@@ -1,7 +1,9 @@
 import { useState } from "react";
-import api from '../services/api'
+import api from '../services/api';
+import { Link, useNavigate } from "react-router-dom";
 
 function Register() {
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         name: "",
@@ -18,20 +20,19 @@ function Register() {
             ...formData,
             [e.target.name]: e.target.value
         });
-
         setError("");
     };
 
-    const handleSubmit = async(e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         if (!formData.name) {
-            setError("Name is required");
+            setError("Full name is required");
             return;
         }
 
         if (!formData.email) {
-            setError("Email is required");
+            setError("Email address is required");
             return;
         }
 
@@ -41,58 +42,79 @@ function Register() {
         }
 
         setError("");
-setSuccess("");
-setLoading(true);
-        try {
-            const response = await api.post("/users", formData);
-            setSuccess("Registration successful")
-        } catch (error) {
-        setError(error.response?.data?.message || "Something went wrong")
-        }
-        finally {
-    setLoading(false);
-}
+        setSuccess("");
+        setLoading(true);
 
-        
-        console.log(formData);
+        try {
+            await api.post("/users", formData);
+            setSuccess("Registration successful! Redirecting to login...");
+            setTimeout(() => {
+                navigate("/login");
+            }, 1500);
+        } catch (error) {
+            setError(error.response?.data?.message || "Something went wrong");
+        } finally {
+            setLoading(false);
+        }
     };
 
-    // console.log(formData);
+    return (
+        <div className="auth-container">
+            <div className="auth-card">
+                <h2>Create an Account</h2>
+                <p className="auth-subtitle">Join SkillSwap to share and learn new skills</p>
 
-    return (<>
-        {error && <p>{error}</p>}
-{success && <p>{success}</p>}
-        <form onSubmit={handleSubmit}>
+                {error && <div className="error-message">{error}</div>}
+                {success && <div className="success-message">{success}</div>}
 
-            <input
-                type="text"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-            />
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label htmlFor="name">Full Name</label>
+                        <input
+                            id="name"
+                            type="text"
+                            name="name"
+                            placeholder="John Doe"
+                            value={formData.name}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-            <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-            />
+                    <div>
+                        <label htmlFor="email">Email Address</label>
+                        <input
+                            id="email"
+                            type="email"
+                            name="email"
+                            placeholder="name@example.com"
+                            value={formData.email}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-            <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-            />
+                    <div>
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            placeholder="••••••••"
+                            value={formData.password}
+                            onChange={handleChange}
+                        />
+                    </div>
 
-            <button type="submit" disabled={loading}>
-                {loading?"Registering....":"Register"}
-            </button>
-        </form>
+                    <button type="submit" disabled={loading}>
+                        {loading ? "Registering..." : "Create Account"}
+                    </button>
+                </form>
 
-    </>)
-
-
+                <p className="auth-footer">
+                    Already have an account? <Link to="/login">Sign in</Link>
+                </p>
+            </div>
+        </div>
+    );
 }
 
 export default Register;

@@ -67,43 +67,53 @@ function Discover() {
     });
 
     if (loading) {
-        return <p>Loading users...</p>;
+        return (
+            <main>
+                <div className="loading">Loading users...</div>
+            </main>
+        );
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return (
+            <main>
+                <div className="error-message">{error}</div>
+            </main>
+        );
     }
 
     return (
         <main>
-            <h1>Discover</h1>
+            <div className="page-header">
+                <h1>Discover Members</h1>
+                <p className="page-subtitle">Find people to exchange skills with</p>
+            </div>
 
-            <div>
-                <label htmlFor="userSearch">
-                    Search Users
-                </label>
-
+            <div className="search-box">
+                <label htmlFor="userSearch">Search Users by Name or Skill</label>
                 <input
                     id="userSearch"
                     type="text"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search by name..."
+                    placeholder="Type a name or skill (e.g. React, Python, Design)..."
                 />
             </div>
 
             {filteredUsers.length === 0 ? (
-                <p>No users found.</p>
+                <div className="empty-state">No users found matching "{search}".</div>
             ) : (
-                filteredUsers.map((user) => (
-                    <DiscoverUserCard
-    key={user._id}
-    user={user}
-    onConnect={handleConnect}
-    connectingId={connectingId}
-    connectionStatus={connectionStatus}
-/>
-                ))
+                <div className="discover-grid">
+                    {filteredUsers.map((user) => (
+                        <DiscoverUserCard
+                            key={user._id}
+                            user={user}
+                            onConnect={handleConnect}
+                            connectingId={connectingId}
+                            connectionStatus={connectionStatus}
+                        />
+                    ))}
+                </div>
             )}
         </main>
     );

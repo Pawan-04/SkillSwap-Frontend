@@ -1,45 +1,49 @@
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
-
-    
-
-const navItems = [
-    {
-        label: "Dashboard",
-        path: "/dashboard"
-    },
-    {
-        label: "Login",
-        path: "/login"
-    },
-    {
-        label: "Register",
-        path: "/register"
-    },
-    {label:"Connections",
-        path:"/connections"
-    },
-    {label:"Discover",
-        path:"/discover"
-    }
-];
-
 function Navbar() {
     const { user } = useAuth();
-    console.log(user);
-    return (
-        <nav>
-            <Link to="/">SkillSwap</Link>
 
-            <div>
-                {navItems.map((item) => (
-                    <NavLink key={item.path} to={item.path}>
-                        {item.label}
-                    </NavLink>
-                ))}
+    return (
+        <header className="navbar">
+            <div className="navbar-inner">
+                <Link to="/" className="navbar-brand">
+                    <span className="brand-logo">🤝</span>
+                    <span className="brand-name">SkillSwap</span>
+                </Link>
+
+                <nav className="navbar-links">
+                    {user ? (
+                        <>
+                            <NavLink to="/dashboard" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+                                Dashboard
+                            </NavLink>
+                            <NavLink to="/discover" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+                                Discover
+                            </NavLink>
+                            <NavLink to="/connections" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+                                Connections
+                            </NavLink>
+                            <NavLink to="/resources" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+                                Resources
+                            </NavLink>
+                            <NavLink to="/profile" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+                                Profile
+                            </NavLink>
+                        </>
+                    ) : (
+                        <>
+                            <NavLink to="/login" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+                                Login
+                            </NavLink>
+                            <NavLink to="/register" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
+                                Register
+                            </NavLink>
+                        </>
+                    )}
+                </nav>
             </div>
-        </nav>
+        </header>
     );
 }
 
