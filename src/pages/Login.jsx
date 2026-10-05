@@ -1,8 +1,10 @@
 import { useState } from "react";
 import api from "../services/api";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 
 function Login() {
+    const { setUser } = useAuth();
     const navigate = useNavigate();
     const [form, setForm] = useState({ email: '', password: '' });
     const [loading, setLoading] = useState(false);
@@ -14,31 +16,46 @@ function Login() {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async(e) => {
-        e.preventDefault();
+   const handleSubmit = async (e) => {
+    e.preventDefault();
 
-        if (!form.email) {
-            setError("Email field is required");
-            return;
-        }
-        if (!form.password) {
-            setError("Password field is required");
-            return;
-        }
-        setLoading(true);
-        setError('');
-        setSuccess('');
-        try {
-            const response = await api.post('/users/login', form);
-            setSuccess("Login successful");
-            localStorage.setItem('token', response.data.token);
-            navigate('/dashboard');
-        } catch (error) {
-            setError(error.response?.data?.message || "Something went wrong");
-        } finally {
-            setLoading(false);
-        }
-    };
+    if (!form.email) {
+        setError("Email field is required");
+        return;
+    }
+
+    if (!form.password) {
+        setError("Password field is required");
+        return;
+    }
+
+    setLoading(true);
+    setError("");
+    setSuccess("");
+
+    try {
+        const response = await api.post("/users/login", form);
+
+        localStorage.setItem("token", response.data.token);
+
+        // Get logged-in user's data
+        const userResponse = await api.get("/users/me");
+
+        // Update AuthContext
+        setUser(userResponse.data.user);
+
+        setSuccess("Login successful");
+
+        navigate("/dashboard");
+
+    } catch (error) {
+        setError(
+            error.response?.data?.message || "Something went wrong"
+        );
+    } finally {
+        setLoading(false);
+    }
+};
 
     return (
         <div className="auth-container">
