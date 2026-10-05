@@ -27,21 +27,44 @@ function Discover() {
         getUsers();
     }, []);
 
-    const filteredUsers = users.filter((user) => {
-    const nameMatches =
-        user.name
-            .toLowerCase()
-            .includes(search.toLowerCase());
+    const [connectingId, setConnectingId] = useState(null);
+    const [connectionStatus, setConnectionStatus] = useState({});
 
-    const skillMatches =
-        user.skillsToTeach.some((skill) =>
-            skill
-                .toLowerCase()
-                .includes(search.toLowerCase())
+ const handleConnect = async (receiverId) => {
+    setConnectingId(receiverId);
+
+    try {
+        await api.post(`/connections/${receiverId}`);
+
+        setConnectionStatus({
+            ...connectionStatus,
+            [receiverId]: "pending",
+        });
+    } catch (error) {
+        setError(
+            error.response?.data?.message ||
+            "Failed to send connection request"
         );
+    } finally {
+        setConnectingId(null);
+    }
+};
 
-    return nameMatches || skillMatches;
-});
+    const filteredUsers = users.filter((user) => {
+        const nameMatches =
+            user.name
+                .toLowerCase()
+                .includes(search.toLowerCase());
+
+        const skillMatches =
+            user.skillsToTeach.some((skill) =>
+                skill
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+            );
+
+        return nameMatches || skillMatches;
+    });
 
     if (loading) {
         return <p>Loading users...</p>;
@@ -74,9 +97,12 @@ function Discover() {
             ) : (
                 filteredUsers.map((user) => (
                     <DiscoverUserCard
-                        key={user._id}
-                        user={user}
-                    />
+    key={user._id}
+    user={user}
+    onConnect={handleConnect}
+    connectingId={connectingId}
+    connectionStatus={connectionStatus}
+/>
                 ))
             )}
         </main>

@@ -8,6 +8,8 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Resources from "./pages/Resources";
 import Discover from "./pages/Discover";
+import Connections from "./pages/Connections";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
     return (
@@ -31,11 +33,16 @@ function App() {
                         element={<Register />}
                     />
 
-                    <Route element={<ProtectedRoute />}>
+    <Route element={<ProtectedRoute />}>
     <Route path="/dashboard" element={<Dashboard />} />
     <Route path="/profile" element={<Profile />} />
+    <Route
+        path="/profile/:userId"
+        element={<UserProfile />}
+    />
     <Route path="/resources" element={<Resources />} />
     <Route path="/discover" element={<Discover />} />
+    <Route path="/connections" element={<Connections />} />
 </Route>
 
                 </Route>

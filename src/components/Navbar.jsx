@@ -16,6 +16,12 @@ const navItems = [
     {
         label: "Register",
         path: "/register"
+    },
+    {label:"Connections",
+        path:"/connections"
+    },
+    {label:"Discover",
+        path:"/discover"
     }
 ];
 
