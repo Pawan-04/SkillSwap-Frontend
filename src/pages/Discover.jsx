@@ -11,7 +11,7 @@ function Discover() {
     useEffect(() => {
         const getUsers = async () => {
             try {
-                const response = await api.get("/users");
+                const response = await api.get("/users/discover/list");
 
                 setUsers(response.data.users);
             } catch (error) {

@@ -69,6 +69,297 @@ ul {
     list-style: none;
 }
 
+/* .message-main{
+    
+    height:500px;
+    width:100%;
+    display:flex;
+    flex-direction: column;
+    background-color: rgb(161, 161, 161);
+    gap:1rem;
+}
+.message-sender{
+    display: flex;
+    background-color: green;
+    padding:2px;
+    border-radius: 8px;
+    color:rgb(251, 247, 247);
+    width:100%;
+    justify-content: end;
+    font-weight: 900;
+   
+}
+.message-receiver{
+    display: flex;
+    justify-content: start;
+    background-color: rgb(94, 95, 94);
+    padding:2px;
+    border-radius: 8px;
+    color:white;
+    width:fit-content;
+    font-weight: 900;
+ 
+    
+}
+.message-h{
+    background-color: rgb(8, 48, 8);
+    font-weight: 700;
+    color:white;
+    width:100%;
+    padding: 3px;
+    width:100%;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+} */
+
+
+/* =========================
+   MESSAGE SECTION
+========================= */
+
+.message-main {
+    width: 100%;
+    max-width: 900px;
+    height: 650px;
+    margin: 30px auto;
+
+    display: flex;
+    flex-direction: column;
+
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    overflow: hidden;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+}
+
+
+/* =========================
+   CHAT HEADER
+========================= */
+
+.message-header {
+    min-height: 70px;
+    padding: 0 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.message-header h1 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.message-header span {
+    font-size: 13px;
+    color: #22c55e;
+}
+
+
+/* =========================
+   MESSAGES AREA
+========================= */
+
+.messages-container {
+    flex: 1;
+    padding: 24px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    overflow-y: auto;
+    background: #f8fafc;
+}
+
+
+/* Each message row */
+
+.message-row {
+    display: flex;
+    width: 100%;
+}
+
+.sender-row {
+    justify-content: flex-end;
+}
+
+.receiver-row {
+    justify-content: flex-start;
+}
+
+
+/* =========================
+   MESSAGE BUBBLES
+========================= */
+
+.message-sender,
+.message-receiver {
+    max-width: 65%;
+    padding: 11px 15px;
+
+    font-size: 14px;
+    line-height: 1.5;
+
+    word-break: break-word;
+    border-radius: 16px;
+}
+
+
+/* Your message */
+
+.message-sender {
+    background: #2563eb;
+    color: white;
+
+    border-bottom-right-radius: 4px;
+}
+
+
+/* Receiver message */
+
+.message-receiver {
+    background: white;
+    color: #1f2937;
+
+    border: 1px solid #e5e7eb;
+
+    border-bottom-left-radius: 4px;
+}
+
+
+/* =========================
+   INPUT AREA
+========================= */
+
+.message-input-area {
+    display: flex;
+    gap: 10px;
+
+    padding: 14px 16px;
+
+    background: #ffffff;
+    border-top: 1px solid #e5e7eb;
+}
+
+.message-input-area input {
+    flex: 1;
+
+    height: 44px;
+    padding: 0 15px;
+
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+
+    outline: none;
+
+    font-size: 14px;
+    color: #111827;
+
+    transition: border 0.2s ease;
+}
+
+.message-input-area input:focus {
+    border-color: #2563eb;
+}
+
+.message-input-area input::placeholder {
+    color: #9ca3af;
+}
+
+
+/* =========================
+   SEND BUTTON
+========================= */
+
+.message-input-area button {
+    height: 44px;
+    padding: 0 20px;
+
+    border: none;
+    border-radius: 10px;
+
+    background: #2563eb;
+    color: white;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition: background 0.2s ease,
+                transform 0.1s ease;
+}
+
+.message-input-area button:hover {
+    background: #1d4ed8;
+}
+
+.message-input-area button:active {
+    transform: scale(0.97);
+}
+
+
+/* =========================
+   SCROLLBAR
+========================= */
+
+.messages-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.messages-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.messages-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 600px) {
+
+    .message-main {
+        height: calc(100vh - 40px);
+        margin: 20px 10px;
+        border-radius: 12px;
+    }
+
+    .message-header {
+        padding: 0 16px;
+    }
+
+    .messages-container {
+        padding: 16px;
+    }
+
+    .message-sender,
+    .message-receiver {
+        max-width: 80%;
+    }
+
+    .message-input-area {
+        padding: 10px;
+    }
+
+    .message-input-area button {
+        padding: 0 15px;
+    }
+}
 
 /* =========================
    Layout

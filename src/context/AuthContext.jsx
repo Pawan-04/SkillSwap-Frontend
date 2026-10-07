@@ -12,6 +12,7 @@ function AuthProvider({ children }) {
         try {
             const response = await api.get("/users/me");
             setUser(response.data.user);
+            console.log(response.data.user)
         } catch (error) {
             localStorage.removeItem("token");
             setUser(null);

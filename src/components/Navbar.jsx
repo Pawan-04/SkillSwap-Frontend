@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 function Navbar() {
-    const { user } = useAuth();
+    const { user, setUser } = useAuth();
 
     return (
         <header className="navbar">
@@ -30,6 +30,8 @@ function Navbar() {
                             <NavLink to="/profile" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")}>
                                 Profile
                             </NavLink>
+                            <NavLink to="/login" className={({ isActive }) => (isActive ? "nav-link active" : "nav-link")} onClick={()=>{setUser(null); localStorage.clear('token')} }>
+                            Logout</NavLink>
                         </>
                     ) : (
                         <>

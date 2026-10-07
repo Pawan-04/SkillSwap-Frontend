@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import api from "../services/api";
 
 function AcceptedConnectionCard({ user }) {
     const navigate = useNavigate();
@@ -6,6 +7,15 @@ function AcceptedConnectionCard({ user }) {
     const handleViewProfile = () => {
         navigate(`/profile/${user._id}`);
     };
+
+    const removeFriend = async ()=>{
+        try{
+            await api.delete(`/connections/${user._id}`)
+        }
+        catch(err){
+            console.log(err)
+        }
+    }
 
     return (
         <article className="connection-card accepted-card">
@@ -25,6 +35,14 @@ function AcceptedConnectionCard({ user }) {
                 onClick={handleViewProfile}
             >
                 View Profile
+            </button>
+
+             <button
+                type="button"
+                className="btn-secondary"
+                onClick={removeFriend}
+            >
+                Remove 
             </button>
         </article>
     );
